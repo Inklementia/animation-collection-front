@@ -38,11 +38,12 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            <iframe width="200" height="100" src=" @Html.DisplayFor(modelItem => item.Link)" 
-                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen></iframe>
-        
-        </td>
+            <span class="youtube-link">@Html.DisplayFor(modelItem => item.Link)</span>
+                <iframe width="200" height="100" src="" class="youtube-frame"
+                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+
+            </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
