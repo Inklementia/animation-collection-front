@@ -11,7 +11,7 @@ namespace AnimationCollectionUI
     {
         public static HttpClient GetHttpClient()
         {
-            string Baseurl = "http://localhost:23520/";
+            string Baseurl = "http://ec2-54-89-162-123.compute-1.amazonaws.com/";
             var client = new HttpClient();
             client.BaseAddress = new Uri(Baseurl);
             client.DefaultRequestHeaders.Clear();
