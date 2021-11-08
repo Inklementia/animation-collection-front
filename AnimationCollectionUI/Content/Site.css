@@ -1,5 +1,7 @@
 ﻿body {
     color:#222;
+    background-image: url("dot-grid.png");
+    background-repeat: repeat;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -20,11 +22,12 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    margin-bottom: 15px;
 }
 
-
-
+.navbar-brand{
+    font-size:30px;
+}
 /*.navbar .nav-item a{
     display: flex;
     padding: 10px 15px;
@@ -33,3 +36,6 @@ textarea {
     font-size: 16px;
 
 }*/
+dd{
+    font-size:20px
+}

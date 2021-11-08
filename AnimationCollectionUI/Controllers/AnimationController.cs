@@ -31,7 +31,7 @@ namespace AnimationCollectionUI.Controllers
             {
                 //Storing the response details recieved from web api
                 var PrResponse = Res.Content.ReadAsStringAsync().Result;
-                //Deserializing the response recieved from web api and storing into the Product list
+                //Deserializing the response recieved from web api and storing into the Animation list
                 animationList = JsonConvert.DeserializeObject<List<Animation>>(PrResponse);
 
             }
@@ -39,9 +39,14 @@ namespace AnimationCollectionUI.Controllers
         }
 
         // GET: Animation/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int? id)
         {
-          
+            // if no id in url -> home
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            // geting Animation page
             Animation animation = null;
 
             HttpResponseMessage Res = await _httpClient.GetAsync("api/Animation/"+ id);
@@ -50,12 +55,13 @@ namespace AnimationCollectionUI.Controllers
             {
                 //Storing the response details recieved from web api
                 var PrResponse = Res.Content.ReadAsStringAsync().Result;
-                //Deserializing the response recieved from web api and storing into the Product list
+                //Deserializing the response recieved from web api and storing into the Animation
                 animation = JsonConvert.DeserializeObject<Animation>(PrResponse);
 
             }
             else
             {
+                // if no response => back to index
                 return RedirectToAction("Index");
             }
             return View(animation);
@@ -90,20 +96,21 @@ namespace AnimationCollectionUI.Controllers
         // GET: Animation/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
+            // if no id in url -> home
             if (id == null)
             {
-                return null;
+                return RedirectToAction("Index");
             }
-            var httpClient = HttpClientHelper.GetHttpClient();
+            // geting Animation page
             Animation animation = null;
 
-            HttpResponseMessage Res = await httpClient.GetAsync("api/Animation/" + id);
+            HttpResponseMessage Res = await _httpClient.GetAsync("api/Animation/" + id);
             //Checking the response is successful or not which is sent using HttpClient
             if (Res.IsSuccessStatusCode)
             {
                 //Storing the response details recieved from web api
                 var PrResponse = Res.Content.ReadAsStringAsync().Result;
-                //Deserializing the response recieved from web api and storing into the Product list
+                //Deserializing the response recieved from web api and storing into the Animation
                 animation = JsonConvert.DeserializeObject<Animation>(PrResponse);
             }
             else
@@ -121,6 +128,7 @@ namespace AnimationCollectionUI.Controllers
             try
             {
                 var result = await _httpClient.PutAsJsonAsync("api/Animation/" + anim.Id, anim);
+                //Checking the response is successful or not which is sent using HttpClient
                 if (result.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
@@ -135,15 +143,22 @@ namespace AnimationCollectionUI.Controllers
         }
 
         // GET: Animation/Delete/5
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int? id)
         {
+            // if no id in url -> home
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            // geting Animation page
             Animation animation = null;
+            //Checking the response is successful or not which is sent using HttpClient
             HttpResponseMessage Res = await _httpClient.GetAsync("api/Animation/" + id);
 
             if (Res.IsSuccessStatusCode)
             {
                 var PrResponse = await Res.Content.ReadAsStringAsync();
-
+                //Deserializing the response recieved from web api and storing into the Animation
                 animation = JsonConvert.DeserializeObject<Animation>(PrResponse);
             }
             else
@@ -160,15 +175,17 @@ namespace AnimationCollectionUI.Controllers
         {
             try
             {
+                // getting Animation
                 HttpResponseMessage Res = await _httpClient.GetAsync("api/Animation/" + id);
                 Animation animation = null;
+                //Checking the response is successful or not which is sent using HttpClient
                 if (Res.IsSuccessStatusCode)
                 {
                     var PrResponse = await Res.Content.ReadAsStringAsync();
-                    //Deserializing the response recieved from web api and storing into the Product list
+                    //Deserializing the response recieved from web api and storing into the Animation list
                     animation = JsonConvert.DeserializeObject<Animation>(PrResponse);
                 }
-
+                // deleteing Animation
                 var result = await _httpClient.DeleteAsync("api/Animation/" + anim.Id);
                 if (result.IsSuccessStatusCode)
                 {
